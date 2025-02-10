@@ -29,21 +29,20 @@ public class SignInQueryHandler : IQueryHandler<SignInQuery, SignInResponse>
     /// <inheritdoc />>
     public async Task<SignInResponse> Handle(SignInQuery request, CancellationToken cancellationToken)
     {
-        var user = await _userService.FindUserByEmailAsync(request.Email);
-
+        var user = await _userService.FindUserByUserNameAsync(request.UserName);
+        
         if (user == null)
             throw new EntityNotFoundException<Entities.User>("Пользователь не найден");
-
+        
         var result = await _userService.SignInWithPasswordAsync(user, request.Password);
-
+        
         string token = null!;
-
+        
         if (result.Succeeded)
         {
-            var role = await _userService.GetRoleAsync(user);
-            token = _jwtService.GenerateJwt(user.Id, role!, user.Email);
+            token = _jwtService.GenerateJwt(user.Id, user.UserName);
         }
-
+        
         return new SignInResponse(result, token);
     }
 }

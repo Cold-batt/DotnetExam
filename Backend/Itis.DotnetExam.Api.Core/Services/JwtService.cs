@@ -22,7 +22,7 @@ public class JwtService: IJwtService
     }
     
     /// <inheritdoc />
-    public string GenerateJwt(Guid userId, string role, string? email)
+    public string GenerateJwt(Guid userId, string? userName)
     {
         var tokenHandler = new JwtSecurityTokenHandler();
         var jwtSecurityKey = Encoding.UTF8.GetBytes(
@@ -30,8 +30,7 @@ public class JwtService: IJwtService
         var claims = new List<Claim>
         {
             new(ClaimTypes.NameIdentifier, userId.ToString()),
-            new(ClaimTypes.Role, role),
-            new(ClaimTypes.Email, email ?? string.Empty)
+            new("UserName", userName ?? string.Empty)
         };
 
         var tokenDescriptor = new SecurityTokenDescriptor

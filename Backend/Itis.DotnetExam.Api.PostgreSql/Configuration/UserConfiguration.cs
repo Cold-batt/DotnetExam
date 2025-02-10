@@ -28,12 +28,6 @@ internal class UserConfiguration : IEntityTypeConfiguration<User>
         builder.Property(p => p.UserName)
             .HasComment("Никнейм пользователя");
         
-        builder.Property(p => p.FirstName)
-            .HasComment("Имя");
-        
-        builder.Property(p => p.LastName)
-            .HasComment("Фамилия");
-        
         builder.Property(p => p.Email)
             .HasComment("Почта");
         

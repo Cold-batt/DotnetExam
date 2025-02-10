@@ -3,6 +3,7 @@ using Itis.DotnetExam.Api.Core.Abstractions;
 using Itis.DotnetExam.Api.Core.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Itis.DotnetExam.Api.Core.Services;
 
@@ -28,6 +29,10 @@ public class UserService: IUserService
         _signInManager = signInManager;
         _dbContext = dbContext;
     }
+
+    /// <inheritdoc />
+    public async Task<User?> FindUserByUserNameAsync(string userName)
+        => await _userManager.Users.FirstOrDefaultAsync(u => u.UserName == userName);
     
     /// <inheritdoc />
     public async Task<User?> FindUserByIdAsync(Guid guid)
@@ -59,10 +64,6 @@ public class UserService: IUserService
         var claims = await _userManager.GetClaimsAsync(user);
         return claims.FirstOrDefault(x => x.Type == ClaimTypes.Role)?.Value;
     }
-
-    /// <inheritdoc />
-    public async Task<User?> FindUserByEmailAsync(string email)
-        => await _userManager.FindByEmailAsync(email);
 
     /// <inheritdoc />
     public async Task<SignInResult> SignInWithPasswordAsync(User user, string password)

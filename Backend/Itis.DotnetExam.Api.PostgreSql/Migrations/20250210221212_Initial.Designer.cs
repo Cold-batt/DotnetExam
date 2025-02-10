@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Itis.DotnetExam.Api.PostgreSql.Migrations
 {
     [DbContext(typeof(EfContext))]
-    [Migration("20250210190808_Initial")]
+    [Migration("20250210221212_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -24,6 +24,48 @@ namespace Itis.DotnetExam.Api.PostgreSql.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+
+            modelBuilder.Entity("Itis.DotnetExam.Api.Core.Entities.Game", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasDefaultValueSql("uuid_in(md5(random()::text || clock_timestamp()::text)::cstring)");
+
+                    b.Property<int[]>("GameMap")
+                        .IsRequired()
+                        .HasColumnType("integer[]")
+                        .HasComment("Игровая карта");
+
+                    b.Property<int>("GameState")
+                        .HasColumnType("integer")
+                        .HasComment("Статус игры");
+
+                    b.Property<int>("MaxRate")
+                        .HasColumnType("integer")
+                        .HasComment("Максимальный рейтинг");
+
+                    b.Property<Guid?>("OpponentId")
+                        .HasColumnType("uuid")
+                        .HasComment("Id оппонента");
+
+                    b.Property<Guid>("OwnerId")
+                        .HasColumnType("uuid")
+                        .HasComment("Id хоста");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OpponentId")
+                        .IsUnique();
+
+                    b.HasIndex("OwnerId")
+                        .IsUnique();
+
+                    b.ToTable("games", "public", t =>
+                        {
+                            t.HasComment("Игровое лобби");
+                        });
+                });
 
             modelBuilder.Entity("Itis.DotnetExam.Api.Core.Entities.User", b =>
                 {
@@ -47,16 +89,6 @@ namespace Itis.DotnetExam.Api.PostgreSql.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("boolean");
 
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasComment("Имя");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasComment("Фамилия");
-
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("boolean");
 
@@ -70,6 +102,12 @@ namespace Itis.DotnetExam.Api.PostgreSql.Migrations
                     b.Property<string>("NormalizedUserName")
                         .HasMaxLength(256)
                         .HasColumnType("character varying(256)");
+
+                    b.Property<Guid?>("OpponentGameId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("OwnerGameId")
+                        .HasColumnType("uuid");
 
                     b.Property<string>("PasswordHash")
                         .HasColumnType("text");
@@ -104,6 +142,57 @@ namespace Itis.DotnetExam.Api.PostgreSql.Migrations
                         {
                             t.HasComment("Профили пользователей");
                         });
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)");
+
+                    b.Property<string>("NormalizedName")
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedName")
+                        .IsUnique()
+                        .HasDatabaseName("RoleNameIndex");
+
+                    b.ToTable("AspNetRoles", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("RoleId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetRoleClaims", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
@@ -151,6 +240,21 @@ namespace Itis.DotnetExam.Api.PostgreSql.Migrations
                     b.ToTable("AspNetUserLogins", (string)null);
                 });
 
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<System.Guid>", b =>
+                {
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("RoleId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("UserId", "RoleId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetUserRoles", (string)null);
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
                 {
                     b.Property<Guid>("UserId")
@@ -168,6 +272,32 @@ namespace Itis.DotnetExam.Api.PostgreSql.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
+                });
+
+            modelBuilder.Entity("Itis.DotnetExam.Api.Core.Entities.Game", b =>
+                {
+                    b.HasOne("Itis.DotnetExam.Api.Core.Entities.User", "Opponent")
+                        .WithOne("OpponentGame")
+                        .HasForeignKey("Itis.DotnetExam.Api.Core.Entities.Game", "OpponentId");
+
+                    b.HasOne("Itis.DotnetExam.Api.Core.Entities.User", "Owner")
+                        .WithOne("OwnerGame")
+                        .HasForeignKey("Itis.DotnetExam.Api.Core.Entities.Game", "OwnerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Opponent");
+
+                    b.Navigation("Owner");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
@@ -188,6 +318,21 @@ namespace Itis.DotnetExam.Api.PostgreSql.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<System.Guid>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Itis.DotnetExam.Api.Core.Entities.User", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
                 {
                     b.HasOne("Itis.DotnetExam.Api.Core.Entities.User", null)
@@ -195,6 +340,13 @@ namespace Itis.DotnetExam.Api.PostgreSql.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Itis.DotnetExam.Api.Core.Entities.User", b =>
+                {
+                    b.Navigation("OpponentGame");
+
+                    b.Navigation("OwnerGame");
                 });
 #pragma warning restore 612, 618
         }

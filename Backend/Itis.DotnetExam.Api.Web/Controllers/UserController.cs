@@ -1,6 +1,5 @@
 ﻿using Itis.DotnetExam.Api.Contracts.Requests.User.RegisterUser;
 using Itis.DotnetExam.Api.Contracts.Requests.User.SignIn;
-using Itis.DotnetExam.Api.Core.Requests;
 using Itis.DotnetExam.Api.Core.Requests.User.RegisterUser;
 using Itis.DotnetExam.Api.Core.Requests.User.SignIn;
 using Itis.DotnetExam.Api.MediatR.Abstractions;
@@ -25,10 +24,6 @@ public class UserController : BaseController
         => await mediator.Send(new RegisterUserCommand
             {
                 UserName = request.UserName,
-                FirstName = request.FirstName,
-                LastName = request.LastName,
-                Role = request.Role,
-                Email = request.Email,
                 Password = request.Password,
             }, cancellationToken);
 
@@ -43,7 +38,7 @@ public class UserController : BaseController
         CancellationToken cancellationToken)
         => await mediator.Send(new SignInQuery
             {
-                Email = request.Email,
+                UserName = request.UserName,
                 Password = request.Password,
             }, cancellationToken);
 }

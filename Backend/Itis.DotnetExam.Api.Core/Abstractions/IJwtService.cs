@@ -9,5 +9,5 @@ public interface IJwtService
     /// Сгенерировать Jwt
     /// </summary>
     /// <returns></returns>
-    public string GenerateJwt(Guid userId, string role, string? email);
+    public string GenerateJwt(Guid userId, string? userName);
 }

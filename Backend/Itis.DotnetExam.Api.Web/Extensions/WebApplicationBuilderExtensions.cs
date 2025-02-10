@@ -62,7 +62,7 @@ public static class WebApplicationBuilderExtensions
         builder.Services
             .AddIdentity<User, IdentityRole<Guid>>(opt =>
             {
-                opt.Password.RequiredLength = 6;
+                opt.Password.RequiredLength = 3;
                 opt.Password.RequireNonAlphanumeric = false;
                 opt.Password.RequireNonAlphanumeric = false;
                 opt.Password.RequireDigit = false;
@@ -153,8 +153,8 @@ public static class WebApplicationBuilderExtensions
     {
         services.AddMediator(s =>
         {
-            s.AddTransient<ICommandHandler<RegisterUserCommand, RegisterUserResponse>, RegisterUserCommandHandler>();
-            s.AddTransient<IQueryHandler<SignInQuery, SignInResponse>, SignInQueryHandler>();
+            s.AddScoped<ICommandHandler<RegisterUserCommand, RegisterUserResponse>, RegisterUserCommandHandler>();
+            s.AddScoped<IQueryHandler<SignInQuery, SignInResponse>, SignInQueryHandler>();
         });
 
         return services;

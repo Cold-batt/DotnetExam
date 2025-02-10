@@ -9,16 +9,6 @@ namespace Itis.DotnetExam.Api.Core.Entities;
 public class User: IdentityUser<Guid>, IEntity
 {
     /// <summary>
-    /// Имя пользователя
-    /// </summary>
-    public string FirstName { get; set; } = default!;
-        
-    /// <summary>
-    /// Фамилия пользователя
-    /// </summary>
-    public string LastName { get; set; } = default!;
-
-    /// <summary>
     /// Игра, где пользователь хост
     /// </summary>
     public Guid? OwnerGameId { get; set; }

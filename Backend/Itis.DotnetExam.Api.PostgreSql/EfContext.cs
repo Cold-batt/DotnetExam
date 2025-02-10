@@ -31,8 +31,7 @@ public class EfContext : IdentityDbContext<User, IdentityRole<Guid>, Guid>, IDbC
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder); // Важно вызвать базовый метод
-
-
+        
         modelBuilder.Seed();
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(EfContext).Assembly);
     }
