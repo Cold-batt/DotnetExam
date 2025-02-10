@@ -1,4 +1,5 @@
 ﻿using Itis.DotnetExam.Api.MediatR.Abstractions;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Itis.DotnetExam.Api.MediatR;
 
@@ -22,7 +23,12 @@ public class Mediator : IMediator
     public Task<TResponse> Send<TResponse>(ICommand<TResponse> command, CancellationToken cancellationToken = default)
     {
         var handlerType = typeof(ICommandHandler<,>).MakeGenericType(command.GetType(), typeof(TResponse));
-        var handler = _serviceProvider.GetService(handlerType);
+
+        object? handler;
+        using (var scope = _serviceProvider.CreateScope())
+        {
+            handler = scope.ServiceProvider.GetService(handlerType);
+        }
 
         if (handler == null)
         {
@@ -37,7 +43,12 @@ public class Mediator : IMediator
     public Task Send(ICommand command, CancellationToken cancellationToken = default)
     {
         var handlerType = typeof(ICommandHandler<>).MakeGenericType(command.GetType());
-        var handler = _serviceProvider.GetService(handlerType);
+        
+        object? handler;
+        using (var scope = _serviceProvider.CreateScope())
+        {
+            handler = scope.ServiceProvider.GetService(handlerType);
+        }
 
         if (handler == null)
         {
@@ -52,7 +63,12 @@ public class Mediator : IMediator
     public Task<TResponse> Send<TResponse>(IQuery<TResponse> query, CancellationToken cancellationToken = default)
     {
         var handlerType = typeof(IQueryHandler<,>).MakeGenericType(query.GetType(), typeof(TResponse));
-        var handler = _serviceProvider.GetService(handlerType);
+        
+        object? handler;
+        using (var scope = _serviceProvider.CreateScope())
+        {
+            handler = scope.ServiceProvider.GetService(handlerType);
+        }
 
         if (handler == null)
         {

@@ -7,7 +7,6 @@ using Itis.DotnetExam.Api.Web.Middlewares;
 using Itis.DotnetExam.Api.PostgreSql;
 using Itis.DotnetExam.Api.Core.Abstractions;
 using Itis.DotnetExam.Api.Core.Entities;
-using Itis.DotnetExam.Api.Core.Requests;
 using Itis.DotnetExam.Api.Core.Requests.User.RegisterUser;
 using Itis.DotnetExam.Api.Core.Requests.User.SignIn;
 using Itis.DotnetExam.Api.Core.Services;
@@ -56,7 +55,7 @@ public static class WebApplicationBuilderExtensions
     public static void ConfigureCore(this WebApplicationBuilder builder)
     {
         builder.Services.ConfigureMediator();
-            
+        
         builder.Services.AddScoped<IDbContext, EfContext>();
         builder.Services.AddScoped<IUserService, UserService>();
         builder.Services.AddSingleton<IJwtService, JwtService>();
