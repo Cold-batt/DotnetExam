@@ -7,7 +7,7 @@ namespace Itis.DotnetExam.Api.PostgreSql.Configuration;
 /// <summary>
 /// Конфигурация для <see cref="User"/>>
 /// </summary>
-internal class UserConfiguration: IEntityTypeConfiguration<User>
+internal class UserConfiguration : IEntityTypeConfiguration<User>
 {
     private const string GuidCommand = "uuid_in(md5(random()::text || clock_timestamp()::text)::cstring)";
 
@@ -27,5 +27,18 @@ internal class UserConfiguration: IEntityTypeConfiguration<User>
 
         builder.Property(p => p.UserName)
             .HasComment("Никнейм пользователя");
+        
+        builder.Property(p => p.Email)
+            .HasComment("Почта");
+        
+        builder.HasOne(x => x.OwnerGame)
+            .WithOne(x => x.Owner)
+            .HasForeignKey<Game>(x => x.OwnerId)
+            .HasPrincipalKey<User>(x => x.Id);
+
+        builder.HasOne(x => x.OpponentGame)
+            .WithOne(x => x.Opponent)
+            .HasForeignKey<Game>(x => x.OpponentId)
+            .HasPrincipalKey<User>(x => x.Id);
     }
 }
