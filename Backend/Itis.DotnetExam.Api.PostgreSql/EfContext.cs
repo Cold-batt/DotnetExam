@@ -21,6 +21,8 @@ public class EfContext : IdentityDbContext<User, IdentityRole<Guid>, Guid>, IDbC
     {
         AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
     }
+    
+    public DbSet<Game> Games { get; set; } = null!;
 
     /// <summary>
     /// Добавление моделей при запуске
