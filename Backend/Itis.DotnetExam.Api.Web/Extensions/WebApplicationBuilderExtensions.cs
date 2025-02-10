@@ -7,12 +7,12 @@ using Itis.DotnetExam.Api.Web.Middlewares;
 using Itis.DotnetExam.Api.PostgreSql;
 using Itis.DotnetExam.Api.Core.Abstractions;
 using Itis.DotnetExam.Api.Core.Entities;
+using Itis.DotnetExam.Api.Core.Requests;
 using Itis.DotnetExam.Api.Core.Requests.User.RegisterUser;
 using Itis.DotnetExam.Api.Core.Requests.User.SignIn;
 using Itis.DotnetExam.Api.Core.Services;
 using Itis.DotnetExam.Api.MediatR;
 using Itis.DotnetExam.Api.MediatR.Abstractions;
-using Itis.DotnetExam.Api.Web.Configurators;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -106,7 +106,6 @@ public static class WebApplicationBuilderExtensions
                         new AuthorizationPolicyBuilder(JwtBearerDefaults.AuthenticationScheme)
                         .RequireAuthenticatedUser()
                         .Build();
-                    opt.PolicyConfigure();
                 });
     }
 

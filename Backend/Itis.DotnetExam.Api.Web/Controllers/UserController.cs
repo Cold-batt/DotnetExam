@@ -1,5 +1,6 @@
 ﻿using Itis.DotnetExam.Api.Contracts.Requests.User.RegisterUser;
 using Itis.DotnetExam.Api.Contracts.Requests.User.SignIn;
+using Itis.DotnetExam.Api.Core.Requests;
 using Itis.DotnetExam.Api.Core.Requests.User.RegisterUser;
 using Itis.DotnetExam.Api.Core.Requests.User.SignIn;
 using Itis.DotnetExam.Api.MediatR.Abstractions;
@@ -13,14 +14,7 @@ namespace Itis.DotnetExam.Api.Web.Controllers;
 public class UserController : BaseController
 {
     /// <summary>
-    /// Конструктор
-    /// </summary>
-    public UserController()
-    {
-    }
-
-    /// <summary>
-    /// Зарегестрировать пользователя
+    /// Зарегистрировать пользователя
     /// </summary>
     /// <returns></returns>
     [HttpPost("register")]
