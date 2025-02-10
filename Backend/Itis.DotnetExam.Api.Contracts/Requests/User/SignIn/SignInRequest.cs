@@ -8,11 +8,10 @@ namespace Itis.DotnetExam.Api.Contracts.Requests.User.SignIn;
 public class SignInRequest
 {
     /// <summary>
-    /// Почта
+    /// Ник пользователя
     /// </summary>
     [Required]
-    [DataType(DataType.EmailAddress)]
-    public string Email { get; set; } = default!;
+    public string UserName { get; set; } = default!;
 
     /// <summary>
     /// Пароль

@@ -23,6 +23,13 @@ public interface IUserService
     /// <param name="user">Пользователь</param>
     /// <returns></returns>
     public Task<IdentityResult> RegisterUserAsync(User user);
+    
+    /// <summary>
+    /// Получить пользователя по никнейму
+    /// </summary>
+    /// <param name="userName"></param>
+    /// <returns></returns>
+    public Task<User?> FindUserByUserNameAsync(string userName);
 
     /// <summary>
     /// Найти пользователя по id
@@ -61,13 +68,6 @@ public interface IUserService
     /// <returns></returns>
     public Task<string?> GetRoleAsync(User user);
     
-    /// <summary>
-    /// Получить пользователя по Email
-    /// </summary>
-    /// <param name="email">Email</param>
-    /// <returns></returns>
-    public Task<User?> FindUserByEmailAsync(string email);
-
     /// <summary>
     /// Войти с помощью пароля
     /// </summary>
