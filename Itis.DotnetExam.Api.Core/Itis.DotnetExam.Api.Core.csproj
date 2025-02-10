@@ -17,6 +17,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Itis.DotnetExam.Api.Contracts\Itis.DotnetExam.Api.Contracts.csproj" />
+      <ProjectReference Include="..\Itis.DotnetExam.Api.Mediator\Itis.DotnetExam.Api.Mediator.csproj" />
     </ItemGroup>
 
     <ItemGroup>

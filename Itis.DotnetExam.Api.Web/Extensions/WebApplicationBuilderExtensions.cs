@@ -1,11 +1,17 @@
 ﻿using System.Reflection;
 using System.Text;
+using Itis.DotnetExam.Api.Contracts.Requests.User.RegisterUser;
+using Itis.DotnetExam.Api.Contracts.Requests.User.SignIn;
 using Itis.DotnetExam.Api.Web.Constants;
 using Itis.DotnetExam.Api.Web.Middlewares;
 using Itis.DotnetExam.Api.PostgreSql;
 using Itis.DotnetExam.Api.Core.Abstractions;
 using Itis.DotnetExam.Api.Core.Entities;
+using Itis.DotnetExam.Api.Core.Requests.User.RegisterUser;
+using Itis.DotnetExam.Api.Core.Requests.User.SignIn;
 using Itis.DotnetExam.Api.Core.Services;
+using Itis.DotnetExam.Api.MediatR;
+using Itis.DotnetExam.Api.MediatR.Abstractions;
 using Itis.DotnetExam.Api.Web.Configurators;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -49,14 +55,13 @@ public static class WebApplicationBuilderExtensions
     /// <param name="builder">WebApplicationBuilder</param>
     public static void ConfigureCore(this WebApplicationBuilder builder)
     {
-        builder.Services.AddMediatR(typeof(EntityBase).Assembly);
-        
+        builder.Services.ConfigureMediator();
+            
         builder.Services.AddScoped<IDbContext, EfContext>();
         builder.Services.AddScoped<IUserService, UserService>();
         builder.Services.AddSingleton<IJwtService, JwtService>();
-        builder.Services.AddScoped<IRoleService, RoleService>();
         builder.Services
-            .AddIdentity<User, Role>(opt =>
+            .AddIdentity<User, IdentityRole<Guid>>(opt =>
             {
                 opt.Password.RequiredLength = 6;
                 opt.Password.RequireNonAlphanumeric = false;
@@ -135,6 +140,28 @@ public static class WebApplicationBuilderExtensions
             });
     }
     
+    /// <summary>
+    /// Использовать обработчик исключений.
+    /// </summary>
+    /// <param name="builder">Билдер пайплайна ASP.NET Core</param>
+    /// <returns></returns>
+    public static IApplicationBuilder UseExceptionHandling(this IApplicationBuilder builder)
+        => builder.UseMiddleware<ExceptionHandlingMiddleware>();
+
+    /// <summary>
+    /// Конфигурация медиатора
+    /// </summary>
+    private static IServiceCollection ConfigureMediator(this IServiceCollection services)
+    {
+        services.AddMediator(s =>
+        {
+            s.AddTransient<ICommandHandler<RegisterUserCommand, RegisterUserResponse>, RegisterUserCommandHandler>();
+            s.AddTransient<IQueryHandler<SignInQuery, SignInResponse>, SignInQueryHandler>();
+        });
+
+        return services;
+    }
+    
     private static IServiceCollection AddCustomSwagger(this IServiceCollection services)
         => services
             .AddSwaggerGen(c =>
@@ -165,12 +192,4 @@ public static class WebApplicationBuilderExtensions
                     }
                 });
             });
-    
-    /// <summary>
-    /// Использовать обработчик исключений.
-    /// </summary>
-    /// <param name="builder">Билдер пайплайна ASP.NET Core</param>
-    /// <returns></returns>
-    public static IApplicationBuilder UseExceptionHandling(this IApplicationBuilder builder)
-        => builder.UseMiddleware<ExceptionHandlingMiddleware>();
 }

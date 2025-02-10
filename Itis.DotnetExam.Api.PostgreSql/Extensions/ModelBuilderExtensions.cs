@@ -11,15 +11,8 @@ public static class ModelBuilderExtensions
     /// <param name="modelBuilder">ModelBuilder</param>
     public static void Seed(this ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<IdentityUserRole<Guid>>(userRole =>
-        {
-            userRole.HasKey(pr => new
-            {
-                pr.UserId,
-                pr.RoleId,
-            });
-        });
-        modelBuilder.Entity<IdentityUserLogin<Guid>>().HasNoKey();
-        modelBuilder.Entity<IdentityUserToken<Guid>>().HasNoKey();
+        modelBuilder.Ignore<IdentityRole<Guid>>();
+        modelBuilder.Ignore<IdentityUserRole<Guid>>();
+        modelBuilder.Ignore<IdentityRoleClaim<Guid>>();
     }
 }

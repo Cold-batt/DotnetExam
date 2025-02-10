@@ -24,8 +24,4 @@
       <ProjectReference Include="..\Itis.DotnetExam.Api.Core\Itis.DotnetExam.Api.Core.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Migrations\" />
-    </ItemGroup>
-
 </Project>

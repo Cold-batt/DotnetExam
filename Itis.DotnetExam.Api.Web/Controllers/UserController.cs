@@ -2,6 +2,7 @@
 using Itis.DotnetExam.Api.Contracts.Requests.User.SignIn;
 using Itis.DotnetExam.Api.Core.Requests.User.RegisterUser;
 using Itis.DotnetExam.Api.Core.Requests.User.SignIn;
+using Itis.DotnetExam.Api.MediatR.Abstractions;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Itis.DotnetExam.Api.Web.Controllers;
@@ -27,7 +28,7 @@ public class UserController : BaseController
         [FromServices] IMediator mediator,
         [FromBody] RegisterUserRequest request,
         CancellationToken cancellationToken)
-        => await mediator.Send(new RegisterUserCommand()
+        => await mediator.Send(new RegisterUserCommand
             {
                 UserName = request.UserName,
                 FirstName = request.FirstName,

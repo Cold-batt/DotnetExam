@@ -1,13 +1,14 @@
 using Itis.DotnetExam.Api.Contracts.Requests.User.SignIn;
 using Itis.DotnetExam.Api.Core.Abstractions;
 using Itis.DotnetExam.Api.Core.Exceptions;
+using Itis.DotnetExam.Api.MediatR.Abstractions;
 
 namespace Itis.DotnetExam.Api.Core.Requests.User.SignIn;
 
 /// <summary>
 /// Обработчик запроса <see cref="SignInQuery"/>
 /// </summary>
-public class SignInQueryHandler : IRequestHandler<SignInQuery, SignInResponse>
+public class SignInQueryHandler : IQueryHandler<SignInQuery, SignInResponse>
 {
     private readonly IUserService _userService;
     private readonly IJwtService _jwtService;
