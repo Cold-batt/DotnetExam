@@ -24,12 +24,9 @@ public class Mediator : IMediator
     {
         var handlerType = typeof(ICommandHandler<,>).MakeGenericType(command.GetType(), typeof(TResponse));
 
-        object? handler;
-        using (var scope = _serviceProvider.CreateScope())
-        {
-            handler = scope.ServiceProvider.GetService(handlerType);
-        }
-
+        using var scope = _serviceProvider.CreateScope();
+        
+        var handler = scope.ServiceProvider.GetService(handlerType);
         if (handler == null)
         {
             throw new InvalidOperationException($"Handler not found for command type {command.GetType()}");
@@ -44,11 +41,8 @@ public class Mediator : IMediator
     {
         var handlerType = typeof(ICommandHandler<>).MakeGenericType(command.GetType());
         
-        object? handler;
-        using (var scope = _serviceProvider.CreateScope())
-        {
-            handler = scope.ServiceProvider.GetService(handlerType);
-        }
+        using var scope = _serviceProvider.CreateScope();
+        var handler = scope.ServiceProvider.GetService(handlerType);
 
         if (handler == null)
         {
@@ -64,11 +58,8 @@ public class Mediator : IMediator
     {
         var handlerType = typeof(IQueryHandler<,>).MakeGenericType(query.GetType(), typeof(TResponse));
         
-        object? handler;
-        using (var scope = _serviceProvider.CreateScope())
-        {
-            handler = scope.ServiceProvider.GetService(handlerType);
-        }
+        using var scope = _serviceProvider.CreateScope();
+        var handler = scope.ServiceProvider.GetService(handlerType);
 
         if (handler == null)
         {
