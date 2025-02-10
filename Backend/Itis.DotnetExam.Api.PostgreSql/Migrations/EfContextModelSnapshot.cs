@@ -80,7 +80,8 @@ namespace Itis.DotnetExam.Api.PostgreSql.Migrations
 
                     b.Property<string>("Email")
                         .HasMaxLength(256)
-                        .HasColumnType("character varying(256)");
+                        .HasColumnType("character varying(256)")
+                        .HasComment("Почта");
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("boolean");
@@ -285,7 +286,10 @@ namespace Itis.DotnetExam.Api.PostgreSql.Migrations
                     b.Navigation("Opponent");
 
                     b.Navigation("Owner");
-            
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
+                {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
