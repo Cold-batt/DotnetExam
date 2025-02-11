@@ -4,10 +4,9 @@ using Itis.DotnetExam.Api.Core.Requests.Game.CreateGame;
 using Itis.DotnetExam.Api.Core.Requests.Game.GetGames;
 using Itis.DotnetExam.Api.MediatR.Abstractions;
 using Microsoft.AspNetCore.Authorization;
-﻿using Itis.DotnetExam.Api.Contracts.Requests.Game.JoinGame;
+using Itis.DotnetExam.Api.Contracts.Requests.Game.JoinGame;
 using Itis.DotnetExam.Api.Contracts.Requests.Game.MakeMove;
 using Itis.DotnetExam.Api.Core.Requests.Game.JoinGame;
-using Itis.DotnetExam.Api.MediatR.Abstractions;
 using MassTransit;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,13 +18,6 @@ namespace Itis.DotnetExam.Api.Web.Controllers;
 [Authorize]
 public class GameController : BaseController
 {
-    // private readonly HttpContext _httpContext;
-    //
-    // public GameController(HttpContext httpContext)
-    // {
-    //     _httpContext = httpContext;
-    // }
-    
     /// <summary>
     /// Получить список игр
     /// </summary>
@@ -36,7 +28,7 @@ public class GameController : BaseController
     [HttpGet]
     public async Task<GetGamesResponse> GetAsync(
         [FromServices] IMediator mediator,
-        [FromQuery] GetGamesRequest request,
+        [FromQuery] GetGamesRequest? request,
         CancellationToken cancellationToken) =>
         await mediator.Send(
             request == null
