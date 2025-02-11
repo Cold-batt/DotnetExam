@@ -1,0 +1,122 @@
+.root {
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.button {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.description {
+  padding: 16px;
+  position: absolute;
+  bottom: 0;
+}
+
+.displayNone {
+  display: none;
+}
+
+.imageView {
+  background-color: var(--lightGrey);
+  border: 1px solid var(--black-6);
+  max-height: 280px;
+  min-height: 280px;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  position: relative;
+
+  img {
+    width: fit-content;
+    height: 100%;
+  }
+
+  video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  audio {
+    width: 100%;
+    position: relative;
+    top: calc(50% - 30px);
+    transform: translateY(calc(50% - 30px));
+  }
+}
+
+.emptyView {
+  max-height: 280px;
+  min-height: 280px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border: 1px dashed var(--black);
+  border-radius: 8px;
+  position: relative;
+}
+
+.deleteButton {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+
+  z-index: 100;
+
+  button {
+    width: 33px;
+    height: 33px;
+    padding: 10px;
+  }
+}
+
+.uploadMoreButton {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+
+  z-index: 100;
+}
+
+.navigation {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.rotate {
+  transform: rotate(180deg);
+}
+
+.chevron {
+  color: var(--greyOne);
+}
+
+.active {
+  color: var(--black);
+}
+
+.swiper {
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+}
+
+.slide {
+  display: flex;
+  justify-content: center;
+}

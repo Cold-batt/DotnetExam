@@ -1,0 +1,17 @@
+.root {
+  display: flex;
+  height: 60px;
+  align-items: center;
+
+  justify-content: space-between;
+
+  background-color: var(--black);
+  margin: 12px;
+  padding: 12px 24px;
+  border-radius: 12px;
+}
+
+.buttons {
+  display: flex;
+  gap: 12px;
+}

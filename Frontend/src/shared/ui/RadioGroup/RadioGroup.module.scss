@@ -1,0 +1,29 @@
+.root {
+  display: flex;
+  gap: 36px;
+}
+
+.vertical {
+  flex-direction: column;
+  gap: 20px;
+}
+
+.item {
+  display: flex;
+  gap: 8px;
+  color: var(--black);
+}
+
+.offIcon {
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+.radioGroupIndicator .onIcon {
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+.radioGroupItem[data-state='checked'] .offIcon {
+  display: none;
+}
