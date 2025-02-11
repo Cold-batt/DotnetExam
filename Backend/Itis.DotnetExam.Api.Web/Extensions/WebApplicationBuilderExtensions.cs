@@ -5,6 +5,7 @@ using Itis.DotnetExam.Api.Contracts.Requests.Game.CreateGame;
 using Itis.DotnetExam.Api.Contracts.Requests.Game.GetGames;
 using Itis.DotnetExam.Api.Contracts.Requests.Game;
 using Itis.DotnetExam.Api.Contracts.Requests.Game.JoinGame;
+using Itis.DotnetExam.Api.Contracts.Requests.User;
 using Itis.DotnetExam.Api.Contracts.Requests.User.GetUserData;
 using Itis.DotnetExam.Api.Contracts.Requests.User.RegisterUser;
 using Itis.DotnetExam.Api.Contracts.Requests.User.SignIn;
@@ -19,6 +20,7 @@ using Itis.DotnetExam.Api.Core.Requests.Game.CreateGame;
 using Itis.DotnetExam.Api.Core.Requests.Game.GetGames;
 using Itis.DotnetExam.Api.Core.Requests.Game;
 using Itis.DotnetExam.Api.Core.Requests.Game.JoinGame;
+using Itis.DotnetExam.Api.Core.Requests.User.GetRating;
 using Itis.DotnetExam.Api.Core.Requests.User.GetUserData;
 using Itis.DotnetExam.Api.Core.Requests.User.RegisterUser;
 using Itis.DotnetExam.Api.Core.Requests.User.SignIn;
@@ -214,6 +216,7 @@ public static class WebApplicationBuilderExtensions
             s.AddTransient<IQueryHandler<GetGamesQuery, GetGamesResponse>, GetGamesQueryHandler>();
             s.AddTransient<IQueryHandler<GetUserDataQuery, GetUserDataResponse>, GetUserDataQueryHandler>();
             s.AddTransient<IQueryHandler<GetChatByGameIdQuery, GetChatResponse>, GetChatByGameIdQueryHandler>();
+            s.AddTransient<IQueryHandler<GetRatingQuery, GetRatingResponse>, GetRatingQueryHandler>();
         });
 
         return services;

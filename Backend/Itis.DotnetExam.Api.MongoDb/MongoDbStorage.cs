@@ -13,7 +13,7 @@ public class MongoDbStorage<TEntity>(IMongoCollection<TEntity> mongoCollection) 
     /// <inheritdoc />
 	public async Task<TEntity?> GetByIdAsync(Guid id) =>
 		await mongoCollection.Find(x => x.Id == id).FirstOrDefaultAsync();
-
+    
     /// <inheritdoc />
 	public async Task InsertAsync(TEntity entity) =>
 		await mongoCollection.InsertOneAsync(entity);
