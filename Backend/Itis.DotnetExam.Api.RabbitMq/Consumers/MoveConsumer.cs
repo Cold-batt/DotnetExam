@@ -46,6 +46,9 @@ public class MoveConsumer : IConsumer<MakeMoveRequest>
 
         if (!thisUserMovable) return;
         if (game.GameMap[context.Message.Index] != MapMarkers.Empty) return;
+        
+        var user = await _userService
+            .FindUserByIdAsync(context.Message.UserId);
 
         game.GameMap[context.Message.Index] = isOwner ? MapMarkers.Circle : MapMarkers.Cross;
 
@@ -60,17 +63,10 @@ public class MoveConsumer : IConsumer<MakeMoveRequest>
                     result is null
                         ? null
                         : context.Message.UserId));
-            
-            var winnerId = result == MapMarkers.Circle
-                ? game.OwnerId
-                : game.OpponentId;
 
-            var winner = await _userService
-                .FindUserByIdAsync(winnerId.GetValueOrDefault());
+            var message = $"{user?.UserName} победил!";
 
-            var message = $"{winner.UserName} победил!";
-
-            await _messageHandler.ReceiveMessage(new SendMessageModel(game.Id, "Admin", message, MessageTypes.Info));
+            await _messageHandler.ReceiveMessage(new SendMessageModel(game.Id, "Admin", message, MessageTypes.Default));
 
             game.GameState = GameState.Finished;
 
@@ -91,6 +87,8 @@ public class MoveConsumer : IConsumer<MakeMoveRequest>
 
             return;
         }
+
+        await _messageHandler.ReceiveMessage(new SendMessageModel(game.Id, "Admin", $"{user?.UserName} сделал ход на клетку {context.Message.Index}", MessageTypes.Info));
 
         var nextTurnUser = isOwner ? game.OwnerId : game.OpponentId;
 
