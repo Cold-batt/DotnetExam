@@ -31,7 +31,6 @@ public class JoinGameCommandHandler : ICommandHandler<JoinGameCommand, JoinGameR
     
     public async Task<JoinGameResponse> Handle(JoinGameCommand command, CancellationToken cancellationToken)
     {
-
         var game = await _dbContext.Games.FirstOrDefaultAsync(g => g.Id == command.GameId,
             cancellationToken: cancellationToken);
         

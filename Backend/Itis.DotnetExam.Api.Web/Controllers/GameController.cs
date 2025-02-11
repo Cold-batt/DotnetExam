@@ -71,11 +71,11 @@ public class GameController : BaseController
     [HttpPost("join")]
     public async Task<JoinGameResponse> JoinGame(
         [FromServices] IMediator mediator,
-        [FromBody] JoinGameRequest request,
+        [FromQuery] Guid gameId,
         CancellationToken cancellationToken)
         => await mediator.Send(new JoinGameCommand
         {
-            GameId = request.GameId,
+            GameId = gameId,
             UserId = CurrentUserId
         }, cancellationToken);
 

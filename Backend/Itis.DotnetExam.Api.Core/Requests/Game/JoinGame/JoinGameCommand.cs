@@ -5,4 +5,5 @@ namespace Itis.DotnetExam.Api.Core.Requests.Game.JoinGame;
 
 public class JoinGameCommand: JoinGameRequest, ICommand<JoinGameResponse>
 {
+    public Guid UserId { set; get; }
 }

@@ -3,5 +3,4 @@
 public class JoinGameRequest
 {
     public Guid GameId { set; get; }
-    public Guid UserId { set; get; }
 }
