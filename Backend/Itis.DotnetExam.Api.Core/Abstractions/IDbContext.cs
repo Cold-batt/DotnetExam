@@ -9,6 +9,11 @@ namespace Itis.DotnetExam.Api.Core.Abstractions;
 public interface IDbContext
 {
     /// <summary>
+    /// Игровое лобби
+    /// </summary>
+    public DbSet<Game> Games { get; set; }
+    
+    /// <summary>
     /// Сохранить изменения в БД
     /// </summary>
     /// <param name="cancellationToken">Токен отмены</param>
