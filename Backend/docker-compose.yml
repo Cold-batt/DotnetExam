@@ -1,36 +1,16 @@
 ﻿version: '1'
-services:        
-  api:
-    image: tictactoeapi
-    container_name: tictactoeapi
+services:
+  PostgreSQL:
+    container_name: postgreSQL
+    hostname: postgreSQL
+    image: postgres:16.0-alpine3.18
+    restart: always
     ports:
-      - "8080:80"
+      - "5432:5432"
     environment:
-      - ASPNETCORE_ENVIRONMENT:Production
-      - ASPNETCORE_URLS=http://+:80
-      - JwtSettings__Issuer=Issuer
-      - JwtSettings__Audience=Audience
-      - JwtSettings__SecretKey=SuperSecretKey26746t27jhbjchbsierubvsjhd
-      - JwtSettings__AccessTokenLifetimeInMinutes=60
-      - Application__DbConnectionString=Host=localhost;Port=5432;Database=DotnetExam;User Id=postgres;Password=1234;Include Error Detail=true;
-      - Application__RabbitMqConnectionString=amqp://admin:admin@RabbitMq:5672
-      - Application__MongoDbConnectionString=mongodb://mongodb:27017
-    build:
-      context: ./TicTacToeBackend/Api
-      dockerfile: Dockerfile
-    depends_on:
-      - RabbitMq
-      - MongoStorage
-      - PostgreSQL
-        
-  frontend:
-    image: tictactoefrontend
-    container_name: tictactoefrontend
-    ports:
-      - "3000:5173"
-    build:
-      context: ./TicTacToeFrontend
-      dockerfile: Dockerfile
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1234
+      POSTGRES_DB: DotnetExam
       
   RabbitMq:
     image: rabbitmq:3-alpine
@@ -47,15 +27,35 @@ services:
     restart: always
     ports:
       - "27017:27017"
-
-  PostgreSQL:
-    container_name: postgreSQL
-    hostname: postgreSQL
-    image: postgres:16.0-alpine3.18
-    restart: always
+      
+  Api:
+    image: dotnetexamback
+    container_name: dotnetexamback
     ports:
-      - "5432:5432"
+      - "8080:80"
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: 1234
-      POSTGRES_DB: DotnetExam
+      - ASPNETCORE_ENVIRONMENT:Production
+      - ASPNETCORE_URLS=http://+:80
+      - JwtSettings__Issuer=Issuer
+      - JwtSettings__Audience=Audience
+      - JwtSettings__SecretKey=SuperSecretKey26746t27jhbjchbsierubvsjhd
+      - JwtSettings__AccessTokenLifetimeInMinutes=600
+      - Application__DbConnectionString=Host=localhost;Port=5432;Database=DotnetExam;User Id=postgres;Password=1234;Include Error Detail=true;
+      - Application__RabbitMqConnectionString=amqp://admin:admin@RabbitMq:5672
+      - Application__MongoDbConnectionString=mongodb://mongodb:27017
+    build:
+      context: ./Itis.DotnetExam.Api.Web
+      dockerfile: Dockerfile
+    depends_on:
+      - RabbitMq
+      - MongoStorage
+      - PostgreSQL
+        
+  Frontend:
+    image: dotnetexamfront
+    container_name: dotnetexamfront
+    ports:
+      - "3000:5173"
+    build:
+      context: ./TicTacToeFrontend
+      dockerfile: Dockerfile

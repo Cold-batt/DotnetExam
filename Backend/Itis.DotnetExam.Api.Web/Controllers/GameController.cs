@@ -26,7 +26,7 @@ public class GameController : BaseController
     /// <param name="request">Запрос</param>
     /// <param name="cancellationToken">Токен отмены запроса</param>
     /// <returns>Список сущностей</returns>
-    [HttpGet("get-all")]
+    [HttpGet("games")]
     public async Task<GetGamesResponse> GetAsync(
         [FromServices] IMediator mediator,
         [FromQuery] GetGamesRequest? request,
@@ -71,11 +71,11 @@ public class GameController : BaseController
     [HttpPost("join")]
     public async Task<JoinGameResponse> JoinGame(
         [FromServices] IMediator mediator,
-        [FromQuery] Guid gameId,
+        [FromBody] JoinGameRequest request,
         CancellationToken cancellationToken)
         => await mediator.Send(new JoinGameCommand
         {
-            GameId = gameId,
+            GameId = request.GameId,
             UserId = CurrentUserId
         }, cancellationToken);
 
