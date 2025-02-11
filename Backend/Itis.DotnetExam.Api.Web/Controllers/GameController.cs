@@ -16,6 +16,7 @@ namespace Itis.DotnetExam.Api.Web.Controllers;
 /// Контроллер игры
 /// </summary>
 [Authorize]
+[Route("[controller]")]
 public class GameController : BaseController
 {
     /// <summary>
@@ -25,7 +26,7 @@ public class GameController : BaseController
     /// <param name="request">Запрос</param>
     /// <param name="cancellationToken">Токен отмены запроса</param>
     /// <returns>Список сущностей</returns>
-    [HttpGet]
+    [HttpGet("get-all")]
     public async Task<GetGamesResponse> GetAsync(
         [FromServices] IMediator mediator,
         [FromQuery] GetGamesRequest? request,
@@ -48,7 +49,7 @@ public class GameController : BaseController
     /// <param name="request">Запрос</param>
     /// <param name="cancellationToken">Токен отмены</param>
     /// <returns>Идентификатор созданной игры</returns>
-    [HttpPost]
+    [HttpPost("create")]
     public async Task<CreateGameResponse> CreateAsync(
         [FromServices] IMediator mediator,
         [FromBody] CreateGameRequest request,

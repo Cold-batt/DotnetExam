@@ -1,5 +1,7 @@
-﻿using Itis.DotnetExam.Api.Contracts.Requests.User.RegisterUser;
+﻿using Itis.DotnetExam.Api.Contracts.Requests.User.GetUserData;
+using Itis.DotnetExam.Api.Contracts.Requests.User.RegisterUser;
 using Itis.DotnetExam.Api.Contracts.Requests.User.SignIn;
+using Itis.DotnetExam.Api.Core.Requests.User.GetUserData;
 using Itis.DotnetExam.Api.Core.Requests.User.RegisterUser;
 using Itis.DotnetExam.Api.Core.Requests.User.SignIn;
 using Itis.DotnetExam.Api.MediatR.Abstractions;
@@ -10,6 +12,7 @@ namespace Itis.DotnetExam.Api.Web.Controllers;
 /// <summary>
 /// Контроллер сущности "Пользователь"
 /// </summary>
+[Route("[controller]")]
 public class UserController : BaseController
 {
     /// <summary>
@@ -41,4 +44,16 @@ public class UserController : BaseController
                 UserName = request.UserName,
                 Password = request.Password,
             }, cancellationToken);
+
+    /// <summary>
+    /// Получить информацию о рейтинге пользователей
+    /// </summary>
+    /// <param name="mediator">Медиатор</param>
+    /// <param name="cancellationToken">Токен отмены запроса</param>
+    /// <returns></returns>
+    [HttpGet("getUserData")]
+    public async Task<GetUserDataResponse> GetUserDataAsync(
+        [FromServices] IMediator mediator, 
+        CancellationToken cancellationToken)
+        => await mediator.Send(new GetUserDataQuery(CurrentUserId));
 }
