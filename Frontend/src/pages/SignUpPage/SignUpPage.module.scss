@@ -1,0 +1,31 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  gap: 36px;
+  padding: 48px 24px;
+  background-color: var(--white);
+  max-height: 100vh;
+  overflow-y: auto;
+}
+
+.fields {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 50%;
+}
+
+.link {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  justify-content: center;
+
+  svg {
+    width: 14px;
+    height: 14px;
+  }
+}

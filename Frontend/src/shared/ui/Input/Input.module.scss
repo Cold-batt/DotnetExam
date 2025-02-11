@@ -1,0 +1,146 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  color: var(--black);
+  border: none;
+
+  border-radius: none;
+}
+
+.wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  &:focus-within .icon {
+    color: var(--black);
+  }
+}
+
+.icon {
+  display: flex;
+  width: 16px;
+  height: 16px;
+  align-items: center;
+  justify-content: center;
+  color: var(--greyOne);
+  transition:
+    color 0.4s,
+    background-color 0.4s;
+}
+
+.iconRight {
+  position: absolute;
+  top: 33%;
+  right: 0px;
+  color: var(--greyTwo);
+}
+
+.wrapper_block {
+  width: 100%;
+  position: relative;
+  padding: 17px 0;
+  height: 47px;
+  border-bottom: 1px solid var(--lightGrey);
+  transition: border 0.4s;
+
+  &.error {
+    border-bottom: 1px solid var(--red);
+  }
+
+  &.disabled {
+    border: 0;
+  }
+}
+
+:global {
+  .activeInput {
+    border-bottom: 1px solid var(--black);
+  }
+}
+
+.floatingInput {
+  display: block;
+  background-color: transparent;
+  width: 100%;
+  border-radius: 0;
+
+  &[disabled] {
+    opacity: 1;
+    pointer-events: none;
+    user-select: none;
+    border: 1px solid var(--BLACK_GRAY_6);
+    background: var(--BLACK_GRAY_6);
+  }
+
+  &:-webkit-autofill,
+  &:-webkit-autofill:hover,
+  &:-webkit-autofill:focus {
+    width: 100%;
+  }
+
+  &:-webkit-autofill ~ .label,
+  &:-webkit-autofill:focus ~ .label {
+    top: 15px;
+    color: var(--greyOne);
+  }
+
+  &::placeholder {
+    color: var(--greyOne);
+    display: block;
+    visibility: initial;
+    opacity: 1;
+    transition: opacity 0.5s;
+  }
+
+  &:focus {
+    &::placeholder {
+      opacity: 0;
+      transition: opacity 0.5s;
+    }
+  }
+
+  &.placeholderOff {
+    &::placeholder {
+      display: none;
+      opacity: 0;
+      visibility: hidden;
+    }
+  }
+
+  &:focus ~ .label,
+  &:not(:placeholder-shown) ~ .label {
+    top: 10px;
+    font-size: 10px;
+    color: var(--greyOne);
+  }
+}
+
+.label {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  transition: 0.2s ease all;
+  pointer-events: none;
+  font-size: 16px;
+  color: var(--greyOne);
+
+  &.labelActive {
+    top: 10px;
+    font-size: 10px;
+    color: var(--greyOne);
+  }
+}
+
+.disabled {
+  opacity: 1;
+  cursor: not-allowed;
+}
+
+.errorMessage {
+  padding-left: 28px;
+}

@@ -11,7 +11,7 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: 1234
       POSTGRES_DB: DotnetExam
-      
+  
   RabbitMq:
     image: rabbitmq:3-alpine
     container_name: RabbitMq
@@ -27,7 +27,7 @@ services:
     restart: always
     ports:
       - "27017:27017"
-      
+  
   Api:
     image: dotnetexamback
     container_name: dotnetexamback
@@ -50,7 +50,7 @@ services:
       - RabbitMq
       - MongoStorage
       - PostgreSQL
-        
+  
   Frontend:
     image: dotnetexamfront
     container_name: dotnetexamfront
