@@ -1,5 +1,7 @@
 ﻿using System.Reflection;
 using System.Text;
+using Itis.DotnetExam.Api.Contracts.Requests.Game;
+using Itis.DotnetExam.Api.Contracts.Requests.Game.JoinGame;
 using Itis.DotnetExam.Api.Contracts.Requests.User.RegisterUser;
 using Itis.DotnetExam.Api.Contracts.Requests.User.SignIn;
 using Itis.DotnetExam.Api.Web.Constants;
@@ -7,17 +9,26 @@ using Itis.DotnetExam.Api.Web.Middlewares;
 using Itis.DotnetExam.Api.PostgreSql;
 using Itis.DotnetExam.Api.Core.Abstractions;
 using Itis.DotnetExam.Api.Core.Entities;
+using Itis.DotnetExam.Api.Core.Requests.Game;
+using Itis.DotnetExam.Api.Core.Requests.Game.JoinGame;
 using Itis.DotnetExam.Api.Core.Requests.User.RegisterUser;
 using Itis.DotnetExam.Api.Core.Requests.User.SignIn;
 using Itis.DotnetExam.Api.Core.Services;
 using Itis.DotnetExam.Api.MediatR;
 using Itis.DotnetExam.Api.MediatR.Abstractions;
+using Itis.DotnetExam.Api.MongoDb;
+using Itis.DotnetExam.Api.MongoDb.Models;
+using Itis.DotnetExam.Api.RabbitMq.Consumers;
+using Itis.DotnetExam.Api.SignalR.Hubs;
+using Itis.DotnetExam.Api.SignalR.Hubs.Abstractions;
+using MassTransit;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using MongoDB.Driver;
 
 namespace Itis.DotnetExam.Api.Web.Extensions;
 
@@ -47,6 +58,37 @@ public static class WebApplicationBuilderExtensions
                     });
             });
     }
+
+    /// <summary>
+    /// Добавить МонгоДБ
+    /// </summary>
+    /// <param name="builder"></param>
+    public static void ConfigureMongoDbConnection(this WebApplicationBuilder builder)
+    {
+        var client = new MongoClient(builder.Configuration["Application:MongoDbConnectionString"]);
+        var database = client.GetDatabase("main");
+
+        builder.Services.AddSingleton<IMongoDbStorage<UserRating>>(
+            new MongoDbStorage<UserRating>(
+                database.GetCollection<UserRating>(nameof(UserRating))));
+    }
+
+    /// <summary>
+    /// Конфигурация кролика через masstransit
+    /// </summary>
+    public static void ConfigureRabbitMq(this WebApplicationBuilder builder)
+    {
+        builder.Services.AddMassTransit(config =>
+        {
+            config.AddConsumer<MoveConsumer>();
+
+            config.UsingRabbitMq((ctx, cfg) =>
+            {
+                cfg.Host(builder.Configuration["Application:RabbitMqConnectionString"]);
+                cfg.ConfigureEndpoints(ctx);
+            });
+        });
+    }
     
     /// <summary>
     /// Добавить службы и зависимости проекта
@@ -58,6 +100,7 @@ public static class WebApplicationBuilderExtensions
         
         builder.Services.AddScoped<IDbContext, EfContext>();
         builder.Services.AddScoped<IUserService, UserService>();
+        builder.Services.AddScoped<IMessageHandler, MessageHandler>();
         builder.Services.AddSingleton<IJwtService, JwtService>();
         builder.Services
             .AddIdentity<User, IdentityRole<Guid>>(opt =>
@@ -154,6 +197,7 @@ public static class WebApplicationBuilderExtensions
         services.AddMediator(s =>
         {
             s.AddScoped<ICommandHandler<RegisterUserCommand, RegisterUserResponse>, RegisterUserCommandHandler>();
+            s.AddScoped<ICommandHandler<JoinGameCommand, JoinGameResponse>, JoinGameCommandHandler>();
             s.AddScoped<IQueryHandler<SignInQuery, SignInResponse>, SignInQueryHandler>();
         });
 

@@ -7,6 +7,8 @@ builder.ConfigureCore();
 builder.ConfigureAuthorization();
 builder.ConfigureJwtBearer();
 builder.ConfigurePostgresqlConnection();
+builder.ConfigureMongoDbConnection();
+builder.ConfigureRabbitMq();
 
 var app = builder.Build();
 

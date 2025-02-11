@@ -1,4 +1,5 @@
-﻿using Itis.DotnetExam.Api.Core.Enums;
+﻿using Itis.DotnetExam.Api.Contracts.Enums;
+using Itis.DotnetExam.Api.Core.Enums;
 using Itis.DotnetExam.Api.Core.Exceptions;
 
 namespace Itis.DotnetExam.Api.Core.Entities;
@@ -22,7 +23,7 @@ public class Game
         User owner,
         int maxRate,
         GameState gameState,
-        GameMapSymbol[] gameMap) // TODO: gameMap под вопросом, стоит убрать из конструктора
+        MapMarkers[] gameMap)
     {
         Owner = owner;
         MaxRate = maxRate;
@@ -62,7 +63,7 @@ public class Game
     /// <summary>
     /// Карта игры
     /// </summary>
-    public GameMapSymbol[] GameMap { get; set; }
+    public MapMarkers[] GameMap { get; set; }
 
     #region Navigation properties
 

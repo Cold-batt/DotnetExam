@@ -9,6 +9,7 @@
     <ItemGroup>
       <PackageReference Include="Aspose.HTML" Version="23.12.0" />
       <PackageReference Include="HtmlAgilityPack" Version="1.11.56" />
+      <PackageReference Include="MassTransit.RabbitMQ" Version="8.3.7-develop.2216" />
       <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
       <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.12" />
       <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.12" />
@@ -18,6 +19,8 @@
     <ItemGroup>
       <ProjectReference Include="..\Itis.DotnetExam.Api.Contracts\Itis.DotnetExam.Api.Contracts.csproj" />
       <ProjectReference Include="..\Itis.DotnetExam.Api.Mediator\Itis.DotnetExam.Api.Mediator.csproj" />
+      <ProjectReference Include="..\Itis.DotnetExam.Api.MongoDb\Itis.DotnetExam.Api.MongoDb.csproj" />
+      <ProjectReference Include="..\Itis.DotnetExam.Api.SignalR\Itis.DotnetExam.Api.SignalR.csproj" />
     </ItemGroup>
 
     <ItemGroup>

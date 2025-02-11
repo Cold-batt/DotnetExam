@@ -3,7 +3,7 @@ using System.Linq.Expressions;
 using Itis.DotnetExam.Api.Core.Exceptions;
 using Itis.DotnetExam.Api.Core.Models;
 
-namespace Bars.ReformaGKH.Sip.Api.Core.Extensions
+namespace Itis.DotnetExam.Api.Core.Extensions
 {
 	/// <summary>
 	/// Расширения <see cref="IQueryable"/>

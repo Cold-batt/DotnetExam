@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="MassTransit.RabbitMQ" Version="8.3.7-develop.2216" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Itis.DotnetExam.Api.Contracts\Itis.DotnetExam.Api.Contracts.csproj" />
+      <ProjectReference Include="..\Itis.DotnetExam.Api.PostgreSql\Itis.DotnetExam.Api.PostgreSql.csproj" />
+    </ItemGroup>
+
+</Project>
