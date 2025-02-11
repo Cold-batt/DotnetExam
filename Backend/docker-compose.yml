@@ -32,20 +32,20 @@ services:
     image: dotnetexamback
     container_name: dotnetexamback
     ports:
-      - "8080:80"
+      - "9000:80"
     environment:
-      - ASPNETCORE_ENVIRONMENT:Production
+      - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:80
       - JwtSettings__Issuer=Issuer
       - JwtSettings__Audience=Audience
       - JwtSettings__SecretKey=SuperSecretKey26746t27jhbjchbsierubvsjhd
       - JwtSettings__AccessTokenLifetimeInMinutes=600
-      - Application__DbConnectionString=Host=localhost;Port=5432;Database=DotnetExam;User Id=postgres;Password=1234;Include Error Detail=true;
+      - Application__DbConnectionString=Host=postgreSQL;Port=5432;Database=DotnetExam;User Id=postgres;Password=1234;Include Error Detail=true;
       - Application__RabbitMqConnectionString=amqp://admin:admin@RabbitMq:5672
       - Application__MongoDbConnectionString=mongodb://mongodb:27017
     build:
-      context: ./Itis.DotnetExam.Api.Web
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: Itis.DotnetExam.Api.Web/Dockerfile
     depends_on:
       - RabbitMq
       - MongoStorage
