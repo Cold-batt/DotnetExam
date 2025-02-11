@@ -1,8 +1,6 @@
 ﻿using Itis.DotnetExam.Api.Contracts.Enums;
-using Itis.DotnetExam.Api.Contracts.Models;
 using Itis.DotnetExam.Api.Contracts.Requests.Game.MakeMove;
 using Itis.DotnetExam.Api.Core.Abstractions;
-using Itis.DotnetExam.Api.Core.Enums;
 using Itis.DotnetExam.Api.MongoDb;
 using Itis.DotnetExam.Api.MongoDb.Models;
 using Itis.DotnetExam.Api.SignalR.Events;

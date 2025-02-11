@@ -1,5 +1,4 @@
 ﻿using Itis.DotnetExam.Api.Contracts.Enums;
-using Itis.DotnetExam.Api.Core.Enums;
 using Itis.DotnetExam.Api.Core.Exceptions;
 
 namespace Itis.DotnetExam.Api.Core.Entities;

@@ -8,8 +8,6 @@ namespace Itis.DotnetExam.Api.Core.Abstractions;
 /// </summary>
 public interface IDbContext
 {
-    public DbSet<Game> Games { get; set; }
-    
     /// <summary>
     /// Игровое лобби
     /// </summary>

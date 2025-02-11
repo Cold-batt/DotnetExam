@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Itis.DotnetExam.Api.Contracts.Enums;
 using Itis.DotnetExam.Api.Contracts.Models;
 using Itis.DotnetExam.Api.Contracts.Requests.Game.JoinGame;
 using Itis.DotnetExam.Api.Core.Abstractions;
-using Itis.DotnetExam.Api.Core.Enums;
 using Itis.DotnetExam.Api.Core.Exceptions;
 using Itis.DotnetExam.Api.MediatR.Abstractions;
 using Itis.DotnetExam.Api.MongoDb;
