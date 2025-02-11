@@ -3,7 +3,6 @@ using Itis.DotnetExam.Api.Contracts.Requests.Game.MakeMove;
 using Itis.DotnetExam.Api.Core.Abstractions;
 using Itis.DotnetExam.Api.MongoDb;
 using Itis.DotnetExam.Api.MongoDb.Models;
-using Itis.DotnetExam.Api.SignalR.Enums;
 using Itis.DotnetExam.Api.SignalR.Events;
 using Itis.DotnetExam.Api.SignalR.Hubs.Abstractions;
 using Itis.DotnetExam.Api.SignalR.Models;

@@ -1,4 +1,4 @@
-﻿namespace Itis.DotnetExam.Api.SignalR.Enums;
+﻿namespace Itis.DotnetExam.Api.Contracts.Enums;
 
 public enum MessageTypes
 {

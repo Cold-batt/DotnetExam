@@ -1,4 +1,5 @@
-﻿using Itis.DotnetExam.Api.Contracts.Enums;
+﻿using Aspose.Html.Rendering.Pdf;
+using Itis.DotnetExam.Api.Contracts.Enums;
 using Itis.DotnetExam.Api.Core.Exceptions;
 
 namespace Itis.DotnetExam.Api.Core.Entities;
@@ -10,6 +11,7 @@ public class Game
 {
     private User? _owner;
     private User? _opponent;
+    private Chat _chat;
     
     /// <summary>
     /// Конструктор
@@ -48,6 +50,25 @@ public class Game
     /// Идентификатор соперника
     /// </summary>
     public Guid? OpponentId { get; set; }
+
+    /// <summary>
+    /// Чат
+    /// </summary>
+    public Guid ChatId { get; set; }
+
+    /// <summary>
+    /// Чат
+    /// </summary>
+    public Chat Chat
+    {
+        get => _chat;
+        set
+        {
+            ChatId = value?.Id
+                     ?? throw new RequiredFieldIsEmpty("Чат");
+            _chat = value;
+        }
+    }
 	
     /// <summary>
     /// Максимальный возможный рейтинг

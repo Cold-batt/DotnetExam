@@ -9,8 +9,6 @@ namespace Itis.DotnetExam.Api.PostgreSql.Configuration;
 /// </summary>
 internal class GameConfiguration : IEntityTypeConfiguration<Game>
 {
-    private const string GuidCommand = "uuid_in(md5(random()::text || clock_timestamp()::text)::cstring)";
-
     /// <summary>
     /// Конфигурация сущности
     /// </summary>
@@ -19,11 +17,6 @@ internal class GameConfiguration : IEntityTypeConfiguration<Game>
     {
         builder.ToTable("games", "public")
             .HasComment("Игровое лобби");
-        
-        builder.HasKey(x => x.Id);
-        builder.Property(x => x.Id)
-            .IsRequired()
-            .HasDefaultValueSql(GuidCommand);
 
         builder.Property(p => p.GameState)
             .HasComment("Статус игры");
@@ -39,6 +32,10 @@ internal class GameConfiguration : IEntityTypeConfiguration<Game>
         
         builder.Property(p => p.MaxRate)
             .HasComment("Максимальный рейтинг");
+        
+        builder.HasOne(x => x.Chat)
+            .WithOne(x => x.Game)
+            .HasForeignKey<Game>(x => x.ChatId);
 
         builder.HasOne(x => x.Owner)
             .WithOne(x => x.OwnerGame)

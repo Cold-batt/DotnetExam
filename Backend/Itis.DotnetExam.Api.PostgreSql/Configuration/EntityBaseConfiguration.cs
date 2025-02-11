@@ -23,7 +23,7 @@ internal abstract class EntityBaseConfiguration<TEntity>: IEntityTypeConfigurati
     /// Конфигурация сущности, не считая полей базового класса  <see cref="EntityBase"/>
     /// </summary>
     /// <param name="builder">Строитель конфигурации</param>
-    public abstract void ConfigureChild(EntityTypeBuilder<TEntity> builder);
+    protected abstract void ConfigureChild(EntityTypeBuilder<TEntity> builder);
 
     private static void ConfigureBase(EntityTypeBuilder<TEntity> builder)
     {

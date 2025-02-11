@@ -1,4 +1,4 @@
-﻿using Itis.DotnetExam.Api.SignalR.Enums;
+﻿using Itis.DotnetExam.Api.Contracts.Enums;
 
 namespace Itis.DotnetExam.Api.SignalR.Models;
 

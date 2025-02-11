@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using System.Text;
+using Itis.DotnetExam.Api.Contracts.Requests.Chat;
 using Itis.DotnetExam.Api.Contracts.Requests.Game.CreateGame;
 using Itis.DotnetExam.Api.Contracts.Requests.Game.GetGames;
 using Itis.DotnetExam.Api.Contracts.Requests.Game;
@@ -11,6 +12,8 @@ using Itis.DotnetExam.Api.Web.Middlewares;
 using Itis.DotnetExam.Api.PostgreSql;
 using Itis.DotnetExam.Api.Core.Abstractions;
 using Itis.DotnetExam.Api.Core.Entities;
+using Itis.DotnetExam.Api.Core.Requests.Chat.GetChat;
+using Itis.DotnetExam.Api.Core.Requests.Chat.SendMessage;
 using Itis.DotnetExam.Api.Core.Requests.Game.CreateGame;
 using Itis.DotnetExam.Api.Core.Requests.Game.GetGames;
 using Itis.DotnetExam.Api.Core.Requests.Game;
@@ -202,9 +205,12 @@ public static class WebApplicationBuilderExtensions
         {
             s.AddScoped<ICommandHandler<RegisterUserCommand, RegisterUserResponse>, RegisterUserCommandHandler>();
             s.AddScoped<ICommandHandler<JoinGameCommand, JoinGameResponse>, JoinGameCommandHandler>();
+            s.AddScoped<ICommandHandler<CreateGameCommand, CreateGameResponse>, CreateGameCommandHandler>();
+            s.AddScoped<ICommandHandler<SendMessageCommand, ResponseMessage>, SendMessageCommandHandler>();
+            
             s.AddScoped<IQueryHandler<SignInQuery, SignInResponse>, SignInQueryHandler>();
             s.AddScoped<IQueryHandler<GetGamesQuery, GetGamesResponse>, GetGamesQueryHandler>();
-            s.AddScoped<ICommandHandler<CreateGameCommand, CreateGameResponse>, CreateGameCommandHandler>();
+            s.AddScoped<IQueryHandler<GetChatByGameIdQuery, GetChatResponse>, GetChatByGameIdQueryHandler>();
         });
 
         return services;

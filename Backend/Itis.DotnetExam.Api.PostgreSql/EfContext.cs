@@ -23,6 +23,8 @@ public class EfContext : IdentityDbContext<User, IdentityRole<Guid>, Guid>, IDbC
     }
     
     public DbSet<Game> Games { get; set; } = null!;
+    public DbSet<Chat> Chats { get; set; }
+    public DbSet<Message> Message { get; set; }
 
     /// <summary>
     /// Добавление моделей при запуске
