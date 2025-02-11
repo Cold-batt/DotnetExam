@@ -31,7 +31,6 @@
 
     <ItemGroup>
       <None Remove="Templates\Email\ResetPassword.html" />
-      <EmbeddedResource Include="Templates\Email\ResetPassword.html" />
     </ItemGroup>
 
 </Project>

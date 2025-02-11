@@ -1,5 +1,7 @@
 ﻿using System.Reflection;
 using System.Text;
+using Itis.DotnetExam.Api.Contracts.Requests.Game.CreateGame;
+using Itis.DotnetExam.Api.Contracts.Requests.Game.GetGames;
 using Itis.DotnetExam.Api.Contracts.Requests.Game;
 using Itis.DotnetExam.Api.Contracts.Requests.Game.JoinGame;
 using Itis.DotnetExam.Api.Contracts.Requests.User.RegisterUser;
@@ -9,6 +11,8 @@ using Itis.DotnetExam.Api.Web.Middlewares;
 using Itis.DotnetExam.Api.PostgreSql;
 using Itis.DotnetExam.Api.Core.Abstractions;
 using Itis.DotnetExam.Api.Core.Entities;
+using Itis.DotnetExam.Api.Core.Requests.Game.CreateGame;
+using Itis.DotnetExam.Api.Core.Requests.Game.GetGames;
 using Itis.DotnetExam.Api.Core.Requests.Game;
 using Itis.DotnetExam.Api.Core.Requests.Game.JoinGame;
 using Itis.DotnetExam.Api.Core.Requests.User.RegisterUser;
@@ -199,6 +203,8 @@ public static class WebApplicationBuilderExtensions
             s.AddScoped<ICommandHandler<RegisterUserCommand, RegisterUserResponse>, RegisterUserCommandHandler>();
             s.AddScoped<ICommandHandler<JoinGameCommand, JoinGameResponse>, JoinGameCommandHandler>();
             s.AddScoped<IQueryHandler<SignInQuery, SignInResponse>, SignInQueryHandler>();
+            s.AddScoped<IQueryHandler<GetGamesQuery, GetGamesResponse>, GetGamesQueryHandler>();
+            s.AddScoped<ICommandHandler<CreateGameCommand, CreateGameResponse>, CreateGameCommandHandler>();
         });
 
         return services;

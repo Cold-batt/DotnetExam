@@ -11,6 +11,11 @@ public interface IDbContext
     public DbSet<Game> Games { get; set; }
     
     /// <summary>
+    /// Игровое лобби
+    /// </summary>
+    public DbSet<Game> Games { get; set; }
+    
+    /// <summary>
     /// Сохранить изменения в БД
     /// </summary>
     /// <param name="cancellationToken">Токен отмены</param>

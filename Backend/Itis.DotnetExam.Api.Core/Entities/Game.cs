@@ -20,12 +20,12 @@ public class Game
     /// <param name="gameState">Статус игры</param>
     /// <param name="gameMap">Карта игры</param>
     public Game(
-        User owner,
+        Guid ownerId,
         int maxRate,
         GameState gameState,
         MapMarkers[] gameMap)
     {
-        Owner = owner;
+        OwnerId = ownerId;
         MaxRate = maxRate;
         GameState = gameState;
         GameMap = gameMap;

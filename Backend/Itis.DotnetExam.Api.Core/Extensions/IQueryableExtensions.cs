@@ -31,42 +31,6 @@ namespace Itis.DotnetExam.Api.Core.Extensions
 		}
 
 		/// <summary>
-		/// Применить сортировку
-		/// <see cref="IPaginationQuery"/>
-		/// </summary>
-		/// <typeparam name="T">Тип IQueryable</typeparam>
-		/// <param name="queryable">IQueryable</param>
-		/// <param name="orderBy">Сортировка</param>
-		/// <returns>IQueryable с сортировкой</returns>
-		public static IQueryable<T> OrderBy<T>(this IQueryable<T> queryable, IOrderByQuery orderBy)
-		{
-			ArgumentNullException.ThrowIfNull(queryable);
-
-			if (string.IsNullOrWhiteSpace(orderBy?.OrderBy))
-				return queryable;
-
-			return queryable.OrderByField(orderBy.OrderBy, orderBy.IsAscending);
-		}
-
-		/// <summary>
-		/// Применить сортировку
-		/// <see cref="IPaginationQuery"/>
-		/// </summary>
-		/// <typeparam name="T">Тип IQueryable</typeparam>
-		/// <param name="queryable">IQueryable</param>
-		/// <param name="orderBy">Сортировка</param>
-		/// <returns>IQueryable с сортировкой</returns>
-		public static IOrderedQueryable<T> ThenBy<T>(this IOrderedQueryable<T> queryable, IOrderByQuery orderBy)
-		{
-			ArgumentNullException.ThrowIfNull(queryable);
-
-			if (string.IsNullOrWhiteSpace(orderBy?.OrderBy))
-				return queryable;
-
-			return queryable.ThenByField(orderBy.OrderBy, orderBy.IsAscending);
-		}
-
-		/// <summary>
 		/// Сортировать по полю, указанному в текстовом виде
 		/// Стащено отсюда: https://stackoverflow.com/a/22227975
 		/// </summary>

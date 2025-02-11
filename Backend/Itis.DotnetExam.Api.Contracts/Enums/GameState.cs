@@ -1,7 +1,7 @@
-﻿namespace Itis.DotnetExam.Api.Core.Enums;
+﻿namespace Itis.DotnetExam.Api.Contracts.Enums;
 
 /// <summary>
-/// Состояние игры
+/// Состояние игры для
 /// </summary>
 public enum GameState
 {
