@@ -3,8 +3,10 @@ using Itis.DotnetExam.Api.Contracts.Requests.Game.MakeMove;
 using Itis.DotnetExam.Api.Core.Abstractions;
 using Itis.DotnetExam.Api.MongoDb;
 using Itis.DotnetExam.Api.MongoDb.Models;
+using Itis.DotnetExam.Api.SignalR.Enums;
 using Itis.DotnetExam.Api.SignalR.Events;
 using Itis.DotnetExam.Api.SignalR.Hubs.Abstractions;
+using Itis.DotnetExam.Api.SignalR.Models;
 using MassTransit;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,12 +17,18 @@ public class MoveConsumer : IConsumer<MakeMoveRequest>
     private readonly IDbContext _dbContext;
     private readonly IMessageHandler _messageHandler;
     private readonly IMongoDbStorage<UserRating> _mongoDbStorage;
+    private readonly IUserService _userService;
 
-    public MoveConsumer(IDbContext dbContext, IMongoDbStorage<UserRating> mongoDbStorage, IMessageHandler messageHandler)
+    public MoveConsumer(
+        IDbContext dbContext,
+        IMongoDbStorage<UserRating> mongoDbStorage,
+        IMessageHandler messageHandler,
+        IUserService userService)
     {
         _dbContext = dbContext;
         _mongoDbStorage = mongoDbStorage;
         _messageHandler = messageHandler;
+        _userService = userService;
     }
 
     public async Task Consume(ConsumeContext<MakeMoveRequest> context)
@@ -52,6 +60,17 @@ public class MoveConsumer : IConsumer<MakeMoveRequest>
                     result is null
                         ? null
                         : context.Message.UserId));
+            
+            var winnerId = result == MapMarkers.Circle
+                ? game.OwnerId
+                : game.OpponentId;
+
+            var winner = await _userService
+                .FindUserByIdAsync(winnerId.GetValueOrDefault());
+
+            var message = $"{winner.UserName} победил!";
+
+            await _messageHandler.ReceiveMessage(new SendMessageModel(game.Id, "Admin", message, MessageTypes.Info));
 
             game.GameState = GameState.Finished;
 

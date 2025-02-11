@@ -1,11 +1,12 @@
 ﻿using Itis.DotnetExam.Api.SignalR.Events;
+using Itis.DotnetExam.Api.SignalR.Models;
 
 namespace Itis.DotnetExam.Api.SignalR.Hubs.Abstractions;
 
 /// <summary>
 /// Хаб игры
 /// </summary>
-public interface ITicTacToeHub
+public interface IGameHub
 {
     /// <summary>
     /// Начало игры
@@ -21,4 +22,11 @@ public interface ITicTacToeHub
     /// Закончить игру
     /// </summary>
     public Task GameFinish(GameEvents.Finish @event);
+    
+    /// <summary>
+    /// Отправить сообщение
+    /// </summary>
+    /// <param name="message"></param>
+    /// <returns></returns>
+    public Task ReceiveMessage(SendMessageModel message);
 }
