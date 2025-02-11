@@ -21,3 +21,17 @@ export interface ICreateGameRequest {
 export interface ICreateGameResponse {
   gameId: string;
 }
+
+export interface IJoinGameRequest {
+  gameId: string;
+}
+
+export interface IJoinGameResponse {
+  gameId: string;
+  ownerId: string;
+  opponentId?: string;
+  gameProgress?: {
+    moveUserId?: string;
+    gameMap?: number[];
+  }
+}

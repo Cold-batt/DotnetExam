@@ -6,8 +6,8 @@ export const AuthService = {
     return await apiExtract.post<ISignInResponse>('/User/signIn', data);
   },
 
-  async registration(data: ISignUpRequest): Promise<void> {
-    return await apiExtract.post('User/register', data);
+  async registration(data: ISignUpRequest) {
+    return await apiExtract.post<ISignInResponse>('User/register', data);
   },
 
   async getUserData() {

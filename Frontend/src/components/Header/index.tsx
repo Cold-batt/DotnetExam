@@ -4,7 +4,11 @@ import { TextBox } from "@/shared/ui/TextBox";
 import { Button } from "@/shared/ui/Button";
 import { CreateGameModal } from "@/pages/GamesPage/Modals/CreateGameModal";
 
-const Header: FC = () => {
+interface HeaderProps {
+  refetch: VoidFunction;
+}
+
+const Header: FC<HeaderProps> = ({ refetch }) => {
   const [showCreateModal, setShowCreateModal] = useState(false);
 
   return (
@@ -24,7 +28,11 @@ const Header: FC = () => {
           + Create New
         </Button>
       </div>
-      <CreateGameModal open={showCreateModal} setOpen={setShowCreateModal} />
+      <CreateGameModal
+        open={showCreateModal}
+        setOpen={setShowCreateModal}
+        refetch={refetch}
+      />
     </div>
   );
 };

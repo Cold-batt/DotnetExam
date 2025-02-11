@@ -19,6 +19,9 @@ const Layout: FC = () => {
       navigate(PATH.SIGNIN);
       return;
     }
+    if (location.pathname === "/") {
+      navigate(PATH.GAMES);
+    }
   }, [navigate, location]);
 
   return (

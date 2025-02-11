@@ -28,7 +28,7 @@ export const routes: RouteObject[] = [
         element: <GamesPage />,
       },
       {
-        path: `${PATH.ROOM}/*`,
+        path: `${PATH.ROOM}/:id`,
         element: <RoomPage />,
       },
     ],

@@ -1,5 +1,5 @@
 import { apiExtract } from '../..';
-import { ICreateGameRequest, ICreateGameResponse, IGetGamesRequest, IGetGamesResponse } from './module';
+import { ICreateGameRequest, ICreateGameResponse, IGetGamesRequest, IGetGamesResponse, IJoinGameRequest, IJoinGameResponse } from './module';
 
 
 export const GamesService = {
@@ -9,5 +9,9 @@ export const GamesService = {
 
   async createGame(data: ICreateGameRequest) {
     return await apiExtract.post<ICreateGameResponse>('/Game/create', data);
+  },
+
+  async joinGame(data: IJoinGameRequest) {
+    return await apiExtract.post<IJoinGameResponse>('/Game/join', data)
   }
 };

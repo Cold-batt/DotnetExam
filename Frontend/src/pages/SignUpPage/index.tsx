@@ -17,7 +17,7 @@ import EyeOpenIcon from "@/assets/icons/eye.open.svg?svgr";
 import PasswordIcon from "@/assets/icons/password.svg?svgr";
 
 import styles from "./SignUpPage.module.scss";
-import { validatePassword } from "@/shared/utils";
+import { authUtils, validatePassword } from "@/shared/utils";
 
 const SignUpPage: FC = () => {
   const navigate = useNavigate();
@@ -26,7 +26,8 @@ const SignUpPage: FC = () => {
   });
 
   const { mutate: registration } = useRegistration({
-    onSuccess: () => {
+    onSuccess: (response) => {
+      authUtils.setToken(response.jwtToken);
       navigate(PATH.GAMES);
     },
   });

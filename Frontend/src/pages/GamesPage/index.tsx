@@ -14,13 +14,14 @@ const GamesPage: FC = () => {
     isFetching,
     hasNextPage,
     fetchNextPage,
+    refetch,
   } = useGetGames({});
 
   const games = gamesResponse?.pages?.flatMap((el) => el.entities);
 
   return (
     <div className={styles.root}>
-      <Header />
+      <Header refetch={refetch} />
 
       <LoaderContainer isLoading={isLoading}>
         {games && (

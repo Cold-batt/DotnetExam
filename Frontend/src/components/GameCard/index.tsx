@@ -4,9 +4,9 @@ import { TextBox } from "@/shared/ui/TextBox";
 import { FC } from "react";
 
 import styles from "./GameCard.module.scss";
-import { Separator } from "@/shared/ui/Separator";
 import { useNavigate } from "react-router-dom";
 import { PATH } from "@/shared/constants";
+import { Separator } from "@/shared/ui/Separator";
 
 const getState = (state: number) => {
   switch (state) {

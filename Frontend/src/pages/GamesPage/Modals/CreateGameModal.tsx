@@ -10,9 +10,18 @@ import { BaseModalProps } from "@/shared/types";
 import { useCreateGame } from "@/shared/api/services/games/hooks/useCreateGame";
 import { ICreateGameRequest } from "@/shared/api/services/games/module";
 
-const CreateGameModal: FC<BaseModalProps> = ({ open, setOpen }) => {
+interface CreateGameModalProps extends BaseModalProps {
+  refetch: VoidFunction;
+}
+
+const CreateGameModal: FC<CreateGameModalProps> = ({
+  open,
+  setOpen,
+  refetch,
+}) => {
   const { mutate, isPending } = useCreateGame({
     onSuccess: () => {
+      refetch();
       handleClose();
     },
   });
