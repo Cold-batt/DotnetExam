@@ -54,8 +54,11 @@ services:
   Frontend:
     image: dotnetexamfront
     container_name: dotnetexamfront
+    environment:
+      - VITE_API_URL: http://localhost:9000
+      - VITE_GAME_SOCKET: http://localhost:9000/hub
     ports:
-      - "3000:5173"
+      - "3000:3000"
     build:
-      context: ./TicTacToeFrontend
-      dockerfile: Dockerfile
+      context: ../Frontend
+      dockerfile: ../Frontend/Dockerfile
