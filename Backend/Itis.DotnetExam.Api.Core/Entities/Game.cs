@@ -1,4 +1,5 @@
-﻿using Itis.DotnetExam.Api.Core.Enums;
+﻿using Itis.DotnetExam.Api.Contracts.Enums;
+using Itis.DotnetExam.Api.Core.Enums;
 using Itis.DotnetExam.Api.Core.Exceptions;
 
 namespace Itis.DotnetExam.Api.Core.Entities;
@@ -19,12 +20,12 @@ public class Game
     /// <param name="gameState">Статус игры</param>
     /// <param name="gameMap">Карта игры</param>
     public Game(
-        User owner,
+        Guid ownerId,
         int maxRate,
         GameState gameState,
         GameMapSymbol[] gameMap) // TODO: gameMap под вопросом, стоит убрать из конструктора
     {
-        Owner = owner;
+        OwnerId = ownerId;
         MaxRate = maxRate;
         GameState = gameState;
         GameMap = gameMap;

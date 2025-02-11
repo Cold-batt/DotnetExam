@@ -3,7 +3,7 @@ using System.Linq.Expressions;
 using Itis.DotnetExam.Api.Core.Exceptions;
 using Itis.DotnetExam.Api.Core.Models;
 
-namespace Bars.ReformaGKH.Sip.Api.Core.Extensions
+namespace Itis.DotnetExam.Api.Core.Extensions
 {
 	/// <summary>
 	/// Расширения <see cref="IQueryable"/>
@@ -28,42 +28,6 @@ namespace Bars.ReformaGKH.Sip.Api.Core.Extensions
 			return queryable
 				.Skip((pagination.PageNumber - 1) * pagination.PageSize)
 				.Take(pagination.PageSize);
-		}
-
-		/// <summary>
-		/// Применить сортировку
-		/// <see cref="IPaginationQuery"/>
-		/// </summary>
-		/// <typeparam name="T">Тип IQueryable</typeparam>
-		/// <param name="queryable">IQueryable</param>
-		/// <param name="orderBy">Сортировка</param>
-		/// <returns>IQueryable с сортировкой</returns>
-		public static IQueryable<T> OrderBy<T>(this IQueryable<T> queryable, IOrderByQuery orderBy)
-		{
-			ArgumentNullException.ThrowIfNull(queryable);
-
-			if (string.IsNullOrWhiteSpace(orderBy?.OrderBy))
-				return queryable;
-
-			return queryable.OrderByField(orderBy.OrderBy, orderBy.IsAscending);
-		}
-
-		/// <summary>
-		/// Применить сортировку
-		/// <see cref="IPaginationQuery"/>
-		/// </summary>
-		/// <typeparam name="T">Тип IQueryable</typeparam>
-		/// <param name="queryable">IQueryable</param>
-		/// <param name="orderBy">Сортировка</param>
-		/// <returns>IQueryable с сортировкой</returns>
-		public static IOrderedQueryable<T> ThenBy<T>(this IOrderedQueryable<T> queryable, IOrderByQuery orderBy)
-		{
-			ArgumentNullException.ThrowIfNull(queryable);
-
-			if (string.IsNullOrWhiteSpace(orderBy?.OrderBy))
-				return queryable;
-
-			return queryable.ThenByField(orderBy.OrderBy, orderBy.IsAscending);
 		}
 
 		/// <summary>
