@@ -14,18 +14,22 @@ public class RegisterUserCommandHandler : ICommandHandler<RegisterUserCommand, R
 {
     private readonly IUserService _userService;
     private readonly IMongoDbStorage<UserRating> _mongoDbStorage;
+    private readonly IJwtService _jwtService;
 
     /// <summary>
     /// Конструктор
     /// </summary>
     /// <param name="userService">Сервис для работы с пользователем</param>
     /// <param name="mongoDbStorage">Монга</param>
+    /// <param name="jwtService">Сервси JWT</param>
     public RegisterUserCommandHandler(
         IUserService userService,
-        IMongoDbStorage<UserRating> mongoDbStorage)
+        IMongoDbStorage<UserRating> mongoDbStorage,
+        IJwtService jwtService)
     {
         _userService = userService;
         _mongoDbStorage = mongoDbStorage;
+        _jwtService = jwtService;
     }
 
     /// <inheritdoc />
@@ -50,8 +54,10 @@ public class RegisterUserCommandHandler : ICommandHandler<RegisterUserCommand, R
              Rating = 0
          };
 
+         var jwt = _jwtService.GenerateJwt(user.Id, user.UserName);
+
         await _mongoDbStorage.InsertAsync(rating);
         
-        return new RegisterUserResponse(result);
+        return new RegisterUserResponse(result, jwt);
     }
 }
