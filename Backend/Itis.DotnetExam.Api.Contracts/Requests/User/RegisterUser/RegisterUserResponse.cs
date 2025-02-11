@@ -11,13 +11,20 @@ public class RegisterUserResponse
     /// Конструктор
     /// </summary>
     /// <param name="result">Результат регистрации</param>
-    public RegisterUserResponse(IdentityResult result)
+    /// <param name="jwt">Jwt токен</param>
+    public RegisterUserResponse(IdentityResult result, string jwt)
     {
         Result = result;
+        Jwt = jwt;
     }
 
     /// <summary>
     /// Результат регистрации
     /// </summary>
     public IdentityResult Result { get; }
+
+    /// <summary>
+    /// Jwt токен
+    /// </summary>
+    public string Jwt { get; }
 }
