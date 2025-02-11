@@ -213,7 +213,6 @@ public static class WebApplicationBuilderExtensions
             s.AddScoped<IQueryHandler<SignInQuery, SignInResponse>, SignInQueryHandler>();
             s.AddScoped<IQueryHandler<GetGamesQuery, GetGamesResponse>, GetGamesQueryHandler>();
             s.AddScoped<IQueryHandler<GetUserDataQuery, GetUserDataResponse>, GetUserDataQueryHandler>();
-            s.AddScoped<ICommandHandler<CreateGameCommand, CreateGameResponse>, CreateGameCommandHandler>();
             s.AddScoped<IQueryHandler<GetChatByGameIdQuery, GetChatResponse>, GetChatByGameIdQueryHandler>();
         });
 
