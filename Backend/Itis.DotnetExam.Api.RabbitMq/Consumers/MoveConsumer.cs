@@ -5,6 +5,7 @@ using Itis.DotnetExam.Api.MongoDb;
 using Itis.DotnetExam.Api.MongoDb.Models;
 using Itis.DotnetExam.Api.SignalR.Events;
 using Itis.DotnetExam.Api.SignalR.Hubs.Abstractions;
+using Itis.DotnetExam.Api.SignalR.Models;
 using MassTransit;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,12 +16,18 @@ public class MoveConsumer : IConsumer<MakeMoveRequest>
     private readonly IDbContext _dbContext;
     private readonly IMessageHandler _messageHandler;
     private readonly IMongoDbStorage<UserRating> _mongoDbStorage;
+    private readonly IUserService _userService;
 
-    public MoveConsumer(IDbContext dbContext, IMongoDbStorage<UserRating> mongoDbStorage, IMessageHandler messageHandler)
+    public MoveConsumer(
+        IDbContext dbContext,
+        IMongoDbStorage<UserRating> mongoDbStorage,
+        IMessageHandler messageHandler,
+        IUserService userService)
     {
         _dbContext = dbContext;
         _mongoDbStorage = mongoDbStorage;
         _messageHandler = messageHandler;
+        _userService = userService;
     }
 
     public async Task Consume(ConsumeContext<MakeMoveRequest> context)
@@ -38,6 +45,9 @@ public class MoveConsumer : IConsumer<MakeMoveRequest>
 
         if (!thisUserMovable) return;
         if (game.GameMap[context.Message.Index] != MapMarkers.Empty) return;
+        
+        var user = await _userService
+            .FindUserByIdAsync(context.Message.UserId);
 
         game.GameMap[context.Message.Index] = isOwner ? MapMarkers.Circle : MapMarkers.Cross;
 
@@ -52,6 +62,10 @@ public class MoveConsumer : IConsumer<MakeMoveRequest>
                     result is null
                         ? null
                         : context.Message.UserId));
+
+            var message = $"{user?.UserName} победил!";
+
+            await _messageHandler.ReceiveMessage(new SendMessageModel(game.Id, "Admin", message, MessageTypes.Default));
 
             game.GameState = GameState.Finished;
 
@@ -72,6 +86,8 @@ public class MoveConsumer : IConsumer<MakeMoveRequest>
 
             return;
         }
+
+        await _messageHandler.ReceiveMessage(new SendMessageModel(game.Id, "Admin", $"{user?.UserName} сделал ход на клетку {context.Message.Index}", MessageTypes.Info));
 
         var nextTurnUser = isOwner ? game.OwnerId : game.OpponentId;
 
