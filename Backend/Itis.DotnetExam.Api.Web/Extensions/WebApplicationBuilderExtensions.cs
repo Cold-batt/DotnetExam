@@ -205,15 +205,15 @@ public static class WebApplicationBuilderExtensions
     {
         services.AddMediator(s =>
         {
-            s.AddScoped<ICommandHandler<RegisterUserCommand, RegisterUserResponse>, RegisterUserCommandHandler>();
-            s.AddScoped<ICommandHandler<JoinGameCommand, JoinGameResponse>, JoinGameCommandHandler>();
-            s.AddScoped<ICommandHandler<CreateGameCommand, CreateGameResponse>, CreateGameCommandHandler>();
-            s.AddScoped<ICommandHandler<SendMessageCommand, ResponseMessage>, SendMessageCommandHandler>();
+            s.AddTransient<ICommandHandler<RegisterUserCommand, RegisterUserResponse>, RegisterUserCommandHandler>();
+            s.AddTransient<ICommandHandler<JoinGameCommand, JoinGameResponse>, JoinGameCommandHandler>();
+            s.AddTransient<ICommandHandler<CreateGameCommand, CreateGameResponse>, CreateGameCommandHandler>();
+            s.AddTransient<ICommandHandler<SendMessageCommand, ResponseMessage>, SendMessageCommandHandler>();
             
-            s.AddScoped<IQueryHandler<SignInQuery, SignInResponse>, SignInQueryHandler>();
-            s.AddScoped<IQueryHandler<GetGamesQuery, GetGamesResponse>, GetGamesQueryHandler>();
-            s.AddScoped<IQueryHandler<GetUserDataQuery, GetUserDataResponse>, GetUserDataQueryHandler>();
-            s.AddScoped<IQueryHandler<GetChatByGameIdQuery, GetChatResponse>, GetChatByGameIdQueryHandler>();
+            s.AddTransient<IQueryHandler<SignInQuery, SignInResponse>, SignInQueryHandler>();
+            s.AddTransient<IQueryHandler<GetGamesQuery, GetGamesResponse>, GetGamesQueryHandler>();
+            s.AddTransient<IQueryHandler<GetUserDataQuery, GetUserDataResponse>, GetUserDataQueryHandler>();
+            s.AddTransient<IQueryHandler<GetChatByGameIdQuery, GetChatResponse>, GetChatByGameIdQueryHandler>();
         });
 
         return services;
